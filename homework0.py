@@ -9,6 +9,8 @@ def homework_times():
   print(date.today())
 
   # месяц назад
+  # почему бы просто не отнимать 30 дней?
+
   s = datetime.strftime(date.today(),'%Y-%m-%d')
   a = s.split('-')
   if int(a[1])>1 :

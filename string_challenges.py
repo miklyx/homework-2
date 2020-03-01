@@ -8,6 +8,8 @@ print(word[-1])
 word = 'Архангельск'
 # ???
 print(len((word.lower()).split('а'))-1)
+# можно проще
+print(word.lower().count('а'))
 
 # Вывести количество гласных букв в слове
 word = 'Архангельск'
