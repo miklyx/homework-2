@@ -95,73 +95,83 @@ is_male = {
   'Миша': True,
 }
 # ???
-
-mlst=[]
-dlst=[]
-for i in school:
-  # print(i.get('class'))
-  for j in i.get('students'):
-    if is_male.get(j.get('first_name')):
-      mlst.append(j.get('first_name'))
-    else:
-      dlst.append(j.get('first_name'))
-  print("В классе "+i.get('class')+" "+str(len(dlst))+" девочки и "+str(len(mlst))+" мальчика")
-  mlst = []
-  dlst = []
+"""
+def computeMaleFemale(school, is_male):
+  if not school:
+    school = [
+      {'class': '2a', 'students': [{'first_name': 'Маша'}, {'first_name': 'Оля'}]},
+      {'class': '3c', 'students': [{'first_name': 'Олег'}, {'first_name': 'Миша'}]},
+      ]
+  if not is_male:
+    is_male = {
+      'Маша': False,
+      'Оля': False,
+      'Олег': True,
+      'Миша': True,
+     }
+  mlst=[]
+  dlst=[]
+  dlstr=[]
+  mlstr=[]
+  classes = {}
+  classes['female'] = ''
+  classes['male'] = ''
+  for i in school:
+    for j in i.get('students'):
+      if is_male.get(j.get('first_name')):
+        mlst.append(j.get('first_name'))
+      else:
+        dlst.append(j.get('first_name'))
+    #print("В классе "+i.get('class')+" "+str(len(dlst))+" девочки и "+str(len(mlst))+" мальчика")
+    mlstr.append({i.get('class'):len(mlst)})
+    dlstr.append({i.get('class'):len(dlst)})
+    mlst = []
+    dlst = []
+  classes['female']=dlstr
+  classes['male'] = mlstr
+  return classes  
   
 # Пример вывода:
 # В классе 2a 2 девочки и 0 мальчика.
 # В классе 3c 0 девочки и 2 мальчика.
-"""
+
 
 # Задание 5
 # По информации о учениках разных классов нужно найти класс, в котором больше всего девочек и больше всего мальчиков.
-school = [
-  {'class': '2a', 'students': [{'first_name': 'Маша'}, {'first_name': 'Оля'}]},
-  {'class': '3c', 'students': [{'first_name': 'Олег'}, {'first_name': 'Миша'}]},
-]
-is_male = {
-  'Маша': False,
-  'Оля': False,
-  'Олег': True,
-  'Миша': True,
-}
-# почему бы не обернуть предыдущее задание в функцию по подсчет девочек и мальчиков в классе?
-# пусть функция computeMaleFemale возвращает {'female': [{'2a': 2}, {'3c': 0}], 'male':[...]}
-# далее ты бы вызывал только computeMaleFemale(dict)
-# и производил сравнения поверх выходного словаря
-# пожалуйста реализуй с такой декомпозицией 
-# ???
+def main():
+  school = [
+    {'class': '2a', 'students': [{'first_name': 'Маша'}, {'first_name': 'Оля'}]},
+    {'class': '3c', 'students': [{'first_name': 'Олег'}, {'first_name': 'Миша'}]},
+  ]
+  is_male = {
+    'Маша': False,
+    'Оля': False,
+    'Олег': True,
+    'Миша': True,
+  }
+  m = 0
+  mc = 0
+  d = 0
+  dc = 0
+ 
+  for i in computeMaleFemale(school,is_male)['male']:
+    if list(i.values())[0] > m:
+      m = list(i.values())[0]
+      mc = list(i.keys())[0]
+  for i in computeMaleFemale(school,is_male)['female']:
+    if list(i.values())[0] > d:
+      d = list(i.values())[0]
+      dc = list(i.keys())[0]
+  print("Больше всего мальчиков в классе "+mc)
+  print("Больше всего девочек в классе "+dc)
 
-mlst=[]
-dlst=[]
-resl = []
-m=0
-mc = ""
-d=0
-md =""
-for i in school:
-  for j in i.get('students'):
-    if is_male.get(j.get('first_name')):
-      mlst.append(j.get('first_name'))
-    else:
-      dlst.append(j.get('first_name'))
-  i['M']=len(mlst)
-  i['D']=len(dlst)
-  resd=dict(classs=i.get('class'),M = i.get('M'),D =i.get('D'))
-  resl.append(resd)
-  mlst = []
-  dlst = []
-  resd = dict()
-for i in resl:
-  if i.get('M') > m:
-    m = i.get('M')
-    mc = i.get('classs')
-  if i.get('D') > d:
-    d = i.get('D')
-    dc = i.get('classs')
-print("Больше всего мальчиков в классе "+mc)
-print("Больше всего девочек в классе "+dc)
-# Пример вывода:
-# Больше всего мальчиков в классе 3c
-# Больше всего девочек в классе 2a
+
+  # почему бы не обернуть предыдущее задание в функцию по подсчет девочек и мальчиков в классе?
+  # пусть функция computeMaleFemale возвращает {'female': [{'2a': 2}, {'3c': 0}], 'male':[...]}
+  # далее ты бы вызывал только computeMaleFemale(dict)
+  # и производил сравнения поверх выходного словаря
+  # пожалуйста реализуй с такой декомпозицией 
+  # ???
+
+if __name__ == "__main__":
+    main()
